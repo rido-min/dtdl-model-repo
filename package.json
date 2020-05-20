@@ -1,0 +1,28 @@
+{
+  "name": "dtdl-model-repo",
+  "version": "1.0.0",
+  "description": "This is an extremely simple application written with Vue.js. Interested users will not find anything exciting here - quite the opposite, everything here is simple and easy to understand.",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server.js -i ui"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "glob": "^7.1.6",
+    "live-plugin-manager": "^0.14.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rido-min/dtdl-model-repo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rido-min/dtdl-model-repo/issues"
+  },
+  "homepage": "https://github.com/rido-min/dtdl-model-repo#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

@@ -1,0 +1,32 @@
+<html>
+
+<head>
+  <title>DTDL Model Repo</title>
+  <link rel="stylesheet" href="s.css">
+</head>
+
+<body>
+  <h1>DTDL Model Repo</h1>
+  
+  <div id="app"></div>
+
+  <script type="text/x-template" id="app-template">
+      <section>
+        
+        <input type="text" v-model="text"  size="60"/>
+        <button v-on:click="search">Search</button>
+        
+        <ul>
+            <li v-for="m in dtdlModels">
+                <span :title="m.pkg">{{ m.id }}</span>
+            </li>
+        </ul>
+    </section>
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  
+  <script src="app.js" type="module"></script>
+</body>
+
+</html>
