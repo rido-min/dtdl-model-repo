@@ -20,4 +20,9 @@ router.get('/search', async (req,res) => {
     res.json(pi)
 })
 
+router.get('/viewModel', (req,res) => {
+    const m = repo.getModel(req.query.id)
+    res.json(m)
+})
+
 app.listen(port,() => console.log("Example app listening %s", port))

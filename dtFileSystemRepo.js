@@ -7,15 +7,16 @@ const PluginManager = require('live-plugin-manager').PluginManager
 const npmorg = '@digital-twins'
 const dir = './plugin_packages/' + npmorg;
 
+let models = []
 const loadModelsFromFS = () => {
-  const models = []
+  models = []
   return new Promise((resolve,reject) => {
       glob(dir + '/**/package.json', function(err, files) {
         files.forEach(f => {
             const pjson =  JSON.parse(fs.readFileSync(f, 'utf-8'))
             pjson.models.forEach(m=>{
                 const dtdlModel = JSON.parse(fs.readFileSync(f.replace('package.json',m),'utf-8'))
-                models.push({id: dtdlModel['@id'], version: pjson.version, pkg:f})
+                models.push({id: dtdlModel['@id'], version: pjson.version, pkg: f, dtdlModel })
             })
         })
         resolve(models)
@@ -50,4 +51,12 @@ const searchModel = async (id) => {
       return null
     }
 }
-module.exports= {loadModelsFromFS, searchModel}
+
+const getModel = (id) => {
+  const m = models.find(e => e.id===id)
+  if (m) {
+    return m.dtdlModel
+  }
+}
+
+module.exports= {loadModelsFromFS, searchModel, getModel}

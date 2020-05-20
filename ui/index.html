@@ -6,8 +6,10 @@
 </head>
 
 <body>
+
   <h1>DTDL Model Repo</h1>
-  
+  <h4>View models from npm @digital-twins org</h4>
+
   <div id="app"></div>
 
   <script type="text/x-template" id="app-template">
@@ -18,7 +20,12 @@
         
         <ul>
             <li v-for="m in dtdlModels">
-                <span :title="m.pkg">{{ m.id }}</span>
+                <span :title="m.pkg"></span>
+                <a  :href="'/api/viewModel?id=' + m.id" 
+                    :title="m.pkg"
+                    target="_blank">
+                    {{ m.id }}
+                </a>
             </li>
         </ul>
     </section>

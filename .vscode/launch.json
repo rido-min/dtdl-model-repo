@@ -7,14 +7,14 @@
         {
             "type": "msedge",
             "request": "launch",
-            "name": "Launch Edge",
+            "name": "Client",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/ui"
         },
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Server",
             "skipFiles": [
                 "<node_internals>/**"
             ],
