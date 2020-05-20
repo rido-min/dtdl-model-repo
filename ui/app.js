@@ -6,8 +6,7 @@ const app = new Vue({
     template:"#app-template",
     data:()=>(
         {
-            text:`dtmi:azure:devicemanagement:deviceinformation;1`,
-            showComplete:true,
+            text:``,
             dtdlModels: []
         }
     ),
