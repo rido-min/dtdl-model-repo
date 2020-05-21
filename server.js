@@ -15,7 +15,7 @@ app.use('/api', router)
 
 router.get('/models', async (req, res) => {
   const models = await repo.loadModelsFromFS()
-  res.json(models)
+  res.json(models.map(m => { return { id: m.id, version: m.version, pkg: m.pkg } }))
 })
 
 router.get('/search', async (req, res) => {
@@ -23,7 +23,7 @@ router.get('/search', async (req, res) => {
     const pi = await repo.searchModel(req.query.id)
     res.json(pi)
   }
-  res.sendStatus(404)
+  res.json()
 })
 
 router.get('/viewModel', (req, res) => {

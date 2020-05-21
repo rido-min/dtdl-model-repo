@@ -1,3 +1,5 @@
+/** @typedef {import('./../node_modules/vue/types') } Vue */
+
 import * as api from './app.api.js'
 
 const app = new Vue({

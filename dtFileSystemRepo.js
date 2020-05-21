@@ -14,6 +14,10 @@ const dir = './plugin_packages/' + npmorg
 
 /** @type {Array<modelInfo>} */
 let models = []
+
+/**
+ * @returns {Promise<Array<modelInfo>>}
+ */
 const loadModelsFromFS = () => {
   models = []
   return new Promise((resolve, reject) => {
@@ -37,20 +41,20 @@ const loadModelsFromFS = () => {
 /**
  *
  * @param {*} id  - Model Id
+ * @returns {Promise<Array<modelInfo>>}
  */
 const searchModel = async (id) => {
-  const normalizedId = replaceString(id.substring(5, id.lastIndexOf(';')), ':', '-')
+  const normalizedId = replaceString(id.substring(5, id.lastIndexOf(';')), ':', '-').toLowerCase()
   const manager = new PluginManager()
   try {
     const pi = await manager.queryPackageFromNpm(npmorg + '/' + normalizedId)
     if (pi) {
       await manager.install(pi.name, pi.version)
     }
-    return loadModelsFromFS()
   } catch (e) {
-    console.log(id + ' no found')
-    return null
+    console.log(id + ' not found')
   }
+  return await loadModelsFromFS()
 }
 
 /**
