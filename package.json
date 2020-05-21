@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/rido-min/dtdl-model-repo#readme",
   "devDependencies": {
+    "@types/express": "^4.17.6",
     "@types/glob": "^7.1.1",
     "@types/vue": "^2.0.0",
     "nodemon": "^2.0.4",
@@ -33,6 +34,11 @@
     "node": "12.x"
   },
   "standard": {
-    "globals": [ "Vue" ]
+    "ignore": [
+      "./_types/*"
+    ],
+    "globals": [
+      "Vue"
+    ]
   }
 }

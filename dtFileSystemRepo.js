@@ -36,7 +36,7 @@ const loadModelsFromFS = () => {
 
 /**
  *
- * @param {string} id  - Model Id
+ * @param {*} id  - Model Id
  */
 const searchModel = async (id) => {
   const normalizedId = replaceString(id.substring(5, id.lastIndexOf(';')), ':', '-')
@@ -55,7 +55,7 @@ const searchModel = async (id) => {
 
 /**
  *
- * @param {string} id  - Model Id
+ * @param {*} id  - Model Id
  */
 const getModel = (id) => {
   const m = models.find(e => e.id === id)
