@@ -17,10 +17,17 @@
   "devDependencies": {
     "@types/express": "^4.17.6",
     "@types/glob": "^7.1.1",
-    "@types/vue": "^2.0.0",
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",
     "standard": "^14.3.4"
+  },
+  "standard": {
+    "ignore": [
+      "./_types/*"
+    ],
+    "globals": [
+      "Mustache"
+    ]
   },
   "repository": {
     "type": "git",
@@ -35,13 +42,5 @@
   "homepage": "https://github.com/rido-min/dtdl-model-repo#readme",
   "engines": {
     "node": "12.x"
-  },
-  "standard": {
-    "ignore": [
-      "./_types/*"
-    ],
-    "globals": [
-      "Vue"
-    ]
   }
 }

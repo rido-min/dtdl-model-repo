@@ -1,29 +1,34 @@
-/** @typedef {import('./../node_modules/vue/types') } Vue */
-
 import * as api from './app.api.js'
 
-const app = new Vue({
-  el: '#app',
-  template: '#app-template',
-  data: () => (
-    {
-      text: '',
-      dtdlModels: []
-    }
-  ),
-  methods: {
-    async initModels () {
-      this.dtdlModels = await api.loadModels()
-    },
-    async search () {
-      const all = await api.loadModelById(this.text)
-      for (const m of all) {
-        console.log(m)
-        if (!this.dtdlModels.find(e => e.id === m.id)) {
-          this.dtdlModels.push(m)
-        }
-      }
-    }
+/**
+ * @param {string} id - element id
+ * @returns {HTMLElement}
+ */
+const gbid = (id) => {
+  const el = document.getElementById(id)
+  if (el === null) {
+    throw new Error('element not found: ' + id)
   }
-})
-app.initModels()
+  return el
+}
+
+const search = async () => {
+  const searchBox = /** @type {HTMLInputElement} */ (gbid('in-search'))
+  const pi = await api.loadModelById(searchBox.value)
+  if (pi === null) {
+    window.alert('model not found')
+  } else {
+    await init()
+  }
+}
+
+const init = async () => {
+  const models = await api.loadModels()
+  gbid('rendered').innerHTML = window.Mustache.render(gbid('template').innerHTML, models)
+}
+
+(async () => {
+  const searchBtn = gbid('btn-search')
+  searchBtn.onclick = search
+  await init()
+})()

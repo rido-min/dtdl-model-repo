@@ -23,7 +23,6 @@ router.get('/search', async (req, res) => {
     const pi = await repo.searchModel(req.query.id)
     res.json(pi)
   }
-  res.json()
 })
 
 router.get('/viewModel', (req, res) => {
