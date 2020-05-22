@@ -24,7 +24,8 @@ const search = async () => {
 
 const init = async () => {
   const models = await api.loadModels()
-  gbid('rendered').innerHTML = window.Mustache.render(gbid('template').innerHTML, models)
+  // @ts-ignore
+  gbid('rendered').innerHTML = Mustache.render(gbid('template').innerHTML, models)
 }
 
 (async () => {
