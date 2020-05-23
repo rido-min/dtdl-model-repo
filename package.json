@@ -4,8 +4,8 @@
   "description": "This is an extremely simple application written with Vue.js. Interested users will not find anything exciting here - quite the opposite, everything here is simple and easy to understand.",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "debugClient": "run-p start browserSync",
+    "start": "node server.js",
+    "dev": "run-p start browserSync",
     "browserSync": "browser-sync start --proxy localhost:3000 -f ui",
     "cleanModels": "node node_modules/rimraf/bin.js ./plugin_packages/",
     "cleanStart": "npm run cleanModels & npm start"

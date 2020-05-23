@@ -20,8 +20,12 @@ router.get('/models', async (req, res) => {
 
 router.get('/search', async (req, res) => {
   if (req.query.id) {
-    const pi = await repo.searchModel(req.query.id)
-    res.json(pi)
+    try {
+      const pi = await repo.searchModel(req.query.id)
+      res.json(pi)
+    } catch (e) {
+      console.error(e)
+    }
   }
 })
 

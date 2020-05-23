@@ -1,4 +1,5 @@
 /** @typedef {import('./../_types/modelTypes').modelInfo } modelInfo */
+/** @typedef {import('./../_types/modelTypes').packageInfo } packageInfo */
 
 /**
  * @returns {Promise<Array<modelInfo>>}
@@ -14,9 +15,9 @@ const loadModels = () => {
 /**
  *
  * @param {string} id  - Model Id
- * @returns {Promise<modelInfo>}
+ * @returns {Promise<packageInfo>}
  */
-const loadModelById = (id) => {
+const search = (id) => {
   return new Promise((resolve, reject) => {
     window.fetch(`/api/search?id=${id}`)
       .then(r => r.json())
@@ -25,4 +26,4 @@ const loadModelById = (id) => {
   })
 }
 
-export { loadModelById, loadModels }
+export { search, loadModels }

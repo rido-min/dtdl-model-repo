@@ -13,4 +13,7 @@ li {
     padding: 5px;
 }
 
+li.found {
+    background-color: yellow;
+}
 

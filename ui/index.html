@@ -12,18 +12,24 @@
 
   <input type="text" id="in-search" placeholder="dtmi:azure:devicemanagement:deviceinformation;1"  size="60"/>
   <button id="btn-search">Search</button>
+  <div id="search-results">results</div>
   <div id="rendered">
 
   </div>
-  <script id="template" type="x-tmpl-mustache">
+
+  <script id="search-result-template" type="x-tmpl-mustache">
+    <span>{{id}}</span> - <span>{{version}}</span>
+    <a href="/api/install?id={{id}}&version={{version}}" target="_blank">Add Models</a>
+  </script>
+
+  <script id="models-list-template" type="x-tmpl-mustache">
     <ul>
       {{#.}}
-        <li>
+        <li id="{{id}}">
           <a href="/api/viewModel?id={{id}}" title="{{pkg}}" target="_blank">{{id}}</a>
         </li>
       {{/.}}
     </ul>
-
   </script>
   
   <script src="https://unpkg.com/mustache@latest"></script>

@@ -6,6 +6,7 @@
     "configurations": [
         {
             "type": "msedge",
+            "version": "stable",
             "request": "launch",
             "name": "Client",
             "url": "http://localhost:3000",

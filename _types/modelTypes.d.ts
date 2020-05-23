@@ -12,3 +12,7 @@ export interface modelInfo {
     dtdlModel: object
 }
 
+export interface packageInfo {
+    name: string,
+    version: string
+}

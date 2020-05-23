@@ -7,10 +7,15 @@ const fs = require('fs')
 const glob = require('glob')
 const replaceString = require('replace-string')
 
-const PluginManager = require('live-plugin-manager').PluginManager
+const lpm = require('live-plugin-manager')
 
-const npmorg = '@digital-twins'
-const dir = './plugin_packages/' + npmorg
+const manager = new lpm.PluginManager({
+  pluginsPath: 'dtdl_models',
+  npmInstallMode: 'noCache'
+})
+
+const npmorg = '@digital-twins/'
+const dir = './dtdl_models/' + npmorg
 
 /** @type {Array<modelInfo>} */
 let models = []
@@ -41,20 +46,19 @@ const loadModelsFromFS = () => {
 /**
  *
  * @param {*} id  - Model Id
- * @returns {Promise<Array<modelInfo>>}
+ * @returns {Promise<lpm.PackageInfo>}
  */
 const searchModel = async (id) => {
-  const normalizedId = replaceString(id.substring(5, id.lastIndexOf(';')), ':', '-').toLowerCase()
-  const manager = new PluginManager()
-  try {
-    const pi = await manager.queryPackageFromNpm(npmorg + '/' + normalizedId)
-    if (pi) {
-      await manager.install(pi.name, pi.version)
-    }
-  } catch (e) {
-    console.log(id + ' not found')
+  /** @type {string} id */
+  let normalizedId = id
+  if (normalizedId.startsWith('dtmi')) {
+    normalizedId = npmorg + replaceString(id.substring(5, id.lastIndexOf(';')), ':', '-').toLowerCase()
   }
-  return await loadModelsFromFS()
+  return new Promise((resolve, reject) => {
+    manager.queryPackageFromNpm(normalizedId)
+      .then(pi => resolve(pi))
+      .catch(e => reject(e))
+  })
 }
 
 /**

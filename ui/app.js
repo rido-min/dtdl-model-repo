@@ -1,5 +1,10 @@
 import * as api from './app.api.js'
 
+/** @typedef {import('./../_types/modelTypes').modelInfo } modelInfo */
+
+/** @type {Array<modelInfo>} models */
+let models = []
+
 /**
  * @param {string} id - element id
  * @returns {HTMLElement}
@@ -12,20 +17,38 @@ const gbid = (id) => {
   return el
 }
 
+/**
+ * @param {string} template
+ * @param {*} model
+ * @param {string} target
+ */
+const bindTemplate = (template, model, target) => {
+  // @ts-ignore
+  gbid(target).innerHTML = Mustache.render(gbid(template).innerHTML, model)
+}
+
+/** @type {HTMLElement} */
+let lastLi
 const search = async () => {
+  if (lastLi) lastLi.className = ''
+  gbid('search-results').innerHTML = ''
   const searchBox = /** @type {HTMLInputElement} */ (gbid('in-search'))
-  const pi = await api.loadModelById(searchBox.value)
-  if (pi === null) {
-    window.alert('model not found')
-  } else {
-    await init()
+  const searchTerm = searchBox.value
+  if (searchTerm.startsWith('dtmi')) {
+    const mod = models.find(m => m.id === searchTerm)
+    if (mod) {
+      lastLi = gbid(searchTerm)
+      lastLi.className = 'found'
+      return
+    }
   }
+  const pi = await api.search(searchTerm)
+  bindTemplate('search-result-template', { id: pi.name, version: pi.version }, 'search-results')
 }
 
 const init = async () => {
-  const models = await api.loadModels()
-  // @ts-ignore
-  gbid('rendered').innerHTML = Mustache.render(gbid('template').innerHTML, models)
+  models = await api.loadModels()
+  bindTemplate('models-list-template', models, 'rendered')
 }
 
 (async () => {
