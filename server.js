@@ -20,8 +20,6 @@ router.get('/models', async (req, res) => {
       id: m.id,
       version: m.version,
       pkg: m.pkg
-        .replace('./dtdl_models', 'https://unpkg.com/browse')
-        .replace('/package.json', '')
     }
   }))
 })
@@ -36,7 +34,6 @@ router.get('/search', async (req, res) => {
     }
   }
 })
-
 
 router.get('/viewModel', (req, res) => {
   const m = repo.getModel(req.query.id)

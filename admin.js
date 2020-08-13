@@ -17,7 +17,7 @@ inquirer.prompt([
   switch (answer.operation) {
     case 'List Models': {
       const models = await repo.loadModelsFromFS()
-      models.forEach(m => console.log(m.id + ' -> ' + m.pkg.replace('./dtdl_models/', '')))
+      models.forEach(m => console.log(m.id + ' -> ' + m.pkg + '@' + m.version))
       break
     }
     case 'Clean Models': {

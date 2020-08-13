@@ -25,6 +25,9 @@ const loadModelsFromFS = () => {
     glob(dir + '/**/package.json', (err, files) => {
       if (err) reject(err)
       files.forEach(f => {
+        const packWithVersion = f
+          .replace('./dtdl_models', '')
+          .replace('/package.json', '')
         /** @type {packagejson} pjson- package.json */
         const pjson = JSON.parse(fs.readFileSync(f, 'utf-8'))
         pjson.models.forEach(/** @param {string} m */m => {
@@ -36,7 +39,7 @@ const loadModelsFromFS = () => {
             id: dtdlModel['@id'],
             version: pjson.version,
             fileName: modelFileName,
-            pkg: f,
+            pkg: packWithVersion,
             dtdlModel
           })
         })
