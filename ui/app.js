@@ -1,7 +1,5 @@
 import * as api from './app.api.js'
 
-/** @typedef {import('./../_types/modelTypes').modelInfo } modelInfo */
-
 /** @type {Array<modelInfo>} models */
 let models = []
 

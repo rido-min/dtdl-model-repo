@@ -1,9 +1,5 @@
-'use strict'
-
-/** @typedef {import('./_types/modelTypes').modelInfo } modelInfo */
-/** @typedef {import('./_types/modelTypes').packagejson } packagejson */
-
 const fs = require('fs')
+const path = require('path')
 const glob = require('glob')
 const replaceString = require('replace-string')
 
@@ -24,6 +20,7 @@ let models = []
  * @returns {Promise<Array<modelInfo>>}
  */
 const loadModelsFromFS = () => {
+  /** @type {Array<modelInfo>} */
   models = []
   return new Promise((resolve, reject) => {
     glob(dir + '/**/package.json', (err, files) => {
@@ -33,13 +30,35 @@ const loadModelsFromFS = () => {
         const pjson = JSON.parse(fs.readFileSync(f, 'utf-8'))
 
         pjson.models.forEach(/** @param {string} m */m => {
+          const modelPath = f.replace('package.json', m)
+          const modelFileName = path.basename(modelPath)
           /** @type {Object.<string, string>} dtdlModel */
-          const dtdlModel = JSON.parse(fs.readFileSync(f.replace('package.json', m), 'utf-8'))
-          models.push({ id: dtdlModel['@id'], version: pjson.version, pkg: f, dtdlModel })
+          const dtdlModel = JSON.parse(fs.readFileSync(modelPath, 'utf-8'))
+          models.push({ id: dtdlModel['@id'], version: pjson.version, fileName: modelFileName, pkg: f, dtdlModel })
         })
       })
       resolve(models)
     })
+  })
+}
+
+const cleanCache = () => {
+  fs.rmdir('dtdl_models', { recursive: true }, e => console.error(e))
+}
+
+const flatCache = async () => {
+  const flatFolder = './dtdl_models/flatten'
+  fs.mkdir(flatFolder, { recursive: true }, e => console.error(e))
+
+  // fs.access(flatFolder, (err) => {
+  //   if (err) {
+  //     fs.mkdir('dtdl-models/flatten', e => console.error(e))
+  //   }
+  // })
+  const models = await loadModelsFromFS()
+  models.forEach(m => {
+    fs.writeFile(flatFolder + '/' + m.fileName, JSON.stringify(m.dtdlModel), e => { if (e) console.error(e) })
+    console.log(m.fileName)
   })
 }
 
@@ -72,4 +91,4 @@ const getModel = (id) => {
   }
 }
 
-module.exports = { loadModelsFromFS, searchModel, getModel }
+module.exports = { loadModelsFromFS, searchModel, getModel, cleanCache, flatCache }

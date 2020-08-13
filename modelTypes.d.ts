@@ -1,18 +1,17 @@
-
-
-export interface packagejson {
+type packagejson = {
     models: string[],
     version: string
 }
 
-export interface modelInfo {
+type modelInfo = {
     id: string,
     version: string,
-    pkg?: string,
+    pkg: string,
+    fileName: string,
     dtdlModel: object
 }
 
-export interface packageInfo {
+type packageInfo = {
     name: string,
     version: string
 }

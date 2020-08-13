@@ -29,7 +29,7 @@
   },
   "standard": {
     "ignore": [
-      "./_types/*"
+      "*.d.ts"
     ],
     "globals": [
       "Mustache"

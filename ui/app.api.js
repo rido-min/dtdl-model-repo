@@ -1,6 +1,3 @@
-/** @typedef {import('./../_types/modelTypes').modelInfo } modelInfo */
-/** @typedef {import('./../_types/modelTypes').packageInfo } packageInfo */
-
 /**
  * @returns {Promise<Array<modelInfo>>}
  */
