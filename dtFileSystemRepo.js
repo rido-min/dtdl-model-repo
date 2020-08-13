@@ -9,9 +9,8 @@ const manager = new lpm.PluginManager({
   pluginsPath: 'dtdl_models',
   npmInstallMode: 'noCache'
 })
-
-const npmorg = '@digital-twins/'
-const dir = './dtdl_models/' + npmorg
+const npmorg = '@digital-twins'
+const dir = './dtdl_models/'
 
 /** @type {Array<modelInfo>} */
 let models = []
@@ -28,13 +27,18 @@ const loadModelsFromFS = () => {
       files.forEach(f => {
         /** @type {packagejson} pjson- package.json */
         const pjson = JSON.parse(fs.readFileSync(f, 'utf-8'))
-
         pjson.models.forEach(/** @param {string} m */m => {
           const modelPath = f.replace('package.json', m)
           const modelFileName = path.basename(modelPath)
           /** @type {Object.<string, string>} dtdlModel */
           const dtdlModel = JSON.parse(fs.readFileSync(modelPath, 'utf-8'))
-          models.push({ id: dtdlModel['@id'], version: pjson.version, fileName: modelFileName, pkg: f, dtdlModel })
+          models.push({
+            id: dtdlModel['@id'],
+            version: pjson.version,
+            fileName: modelFileName,
+            pkg: f + '@' + pjson.version,
+            dtdlModel
+          })
         })
       })
       resolve(models)
@@ -49,12 +53,6 @@ const cleanCache = () => {
 const flatCache = async () => {
   const flatFolder = './dtdl_models/flatten'
   fs.mkdir(flatFolder, { recursive: true }, e => console.error(e))
-
-  // fs.access(flatFolder, (err) => {
-  //   if (err) {
-  //     fs.mkdir('dtdl-models/flatten', e => console.error(e))
-  //   }
-  // })
   const models = await loadModelsFromFS()
   models.forEach(m => {
     fs.writeFile(flatFolder + '/' + m.fileName, JSON.stringify(m.dtdlModel), e => { if (e) console.error(e) })
