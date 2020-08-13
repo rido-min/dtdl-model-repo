@@ -36,7 +36,7 @@ const loadModelsFromFS = () => {
             id: dtdlModel['@id'],
             version: pjson.version,
             fileName: modelFileName,
-            pkg: f + '@' + pjson.version,
+            pkg: f,
             dtdlModel
           })
         })

@@ -8,9 +8,9 @@
 <body>
 
   <h1>DTDL Model Repo</h1>
-  <input type="text" id="in-search" placeholder="dtmi:azure:devicemanagement:deviceinformation;1"  size="60"/>
+  <!-- <input type="text" id="in-search" placeholder="dtmi:azure:devicemanagement:deviceinformation;1"  size="60"/>
   <button id="btn-search">Search</button>
-  <div id="search-results">results</div>
+  <div id="search-results">results</div> -->
   <div id="rendered">
 
   </div>
@@ -24,7 +24,10 @@
     <ul>
       {{#.}}
         <li id="{{id}}">
+          <div>
           <a href="/api/viewModel?id={{id}}" title="{{pkg}}" target="_blank">{{id}}</a>
+          </div> 
+          <a class="small" href="{{pkg}}@{{version}}/" target="_blank">browse in unpkg</a>
         </li>
       {{/.}}
     </ul>
